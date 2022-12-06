@@ -3,7 +3,7 @@ mod ball;
 use bevy::prelude::*;
 use bevy::sprite::MaterialMesh2dBundle;
 use bevy::time::FixedTimestep;
-use crate::ball::{Ball, ball_movement_system, BallMovement};
+use crate::ball::{Ball, ball_bounce_system, ball_movement_system, BallMovement};
 
 pub const BALL_RADIUS: f32 = 10.;
 
@@ -17,6 +17,7 @@ fn main() {
             SystemSet::new()
                 .with_run_criteria(FixedTimestep::step(1.0 / (FPS as f64)))
                 .with_system(ball_movement_system)
+                .with_system(ball_bounce_system)
         )
         .run();
 }
@@ -33,7 +34,7 @@ fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials
         mass: 1.,
         elasticity: 0.8,
     }).insert(BallMovement {
-        direction: 1.,
-        velocity: 1.,
+        dx: 1.,
+        dy: 1.,
     });
 }
