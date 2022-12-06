@@ -1,4 +1,3 @@
-use std::f32::consts::PI;
 use bevy::prelude::{Component, Query, Res, Transform, Windows};
 use crate::BALL_RADIUS;
 
