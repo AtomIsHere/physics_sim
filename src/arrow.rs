@@ -14,7 +14,7 @@ pub struct Arrow {
 
 impl Geometry for Arrow {
     fn add_geometry(&self, b: &mut Builder) {
-        let rectangle_origin = Point::new(0., 0.);
+        let rectangle_origin = Point::new(-self.rectangle_width/2., 0.);
 
         b.add_rectangle(
             &Box2D::from_origin_and_size(rectangle_origin, Size2D::new(self.rectangle_width, self.rectangle_length)),
@@ -23,9 +23,9 @@ impl Geometry for Arrow {
         b.add_polygon(
             Polygon {
                 points: &[
-                    point(-self.triangle_offset, self.rectangle_length),
-                    point(self.triangle_offset + self.rectangle_width, self.rectangle_length),
-                    point(self.rectangle_width/2., self.rectangle_length + self.triangle_height)
+                    point(-self.triangle_offset - self.rectangle_width/2., self.rectangle_length),
+                    point(self.triangle_offset + self.rectangle_width/2., self.rectangle_length),
+                    point(0., self.rectangle_length + self.triangle_height)
                 ],
                 closed: true
             }
