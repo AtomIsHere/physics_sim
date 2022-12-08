@@ -7,7 +7,7 @@ use bevy::time::FixedTimestep;
 use bevy_prototype_lyon::draw::{DrawMode, FillMode};
 use bevy_prototype_lyon::prelude::{GeometryBuilder, ShapePlugin};
 use crate::arrow::Arrow;
-use crate::ball::{Ball, ball_bounce_system, ball_movement_system, BallMovement};
+use crate::ball::{Ball, ball_bounce_system, ball_movement_system, BallMovement, velocity_arrow_system, VelocityVectorArrow};
 
 pub const BALL_RADIUS: f32 = 10.;
 
@@ -23,6 +23,7 @@ fn main() {
                 .with_run_criteria(FixedTimestep::step(1.0 / (FPS as f64)))
                 .with_system(ball_movement_system)
                 .with_system(ball_bounce_system)
+                .with_system(velocity_arrow_system)
         )
         .run();
 }
@@ -45,7 +46,7 @@ fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials
         mass: 1.,
         elasticity: 0.8,
     }).insert(BallMovement {
-        dx: 1.,
+        dx: -2.,
         dy: 1.,
     });
 
@@ -53,5 +54,5 @@ fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials
         &arrow,
         DrawMode::Fill(FillMode::color(Color::WHITE)),
         Transform::default()
-    ));
+    )).insert(VelocityVectorArrow);
 }
